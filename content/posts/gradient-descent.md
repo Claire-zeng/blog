@@ -4,6 +4,7 @@ date: 2024-01-15
 categories: ["优化算法"]
 tags: ["梯度下降", "机器学习", "数值优化"]
 draft: false
+slug: "gradient-descent"
 ---
 
 # 梯度下降算法详解

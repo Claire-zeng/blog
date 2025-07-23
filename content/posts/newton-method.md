@@ -4,6 +4,7 @@ date: 2024-01-16
 categories: ["优化算法"]
 tags: ["牛顿法", "二阶优化", "数值优化"]
 draft: false
+slug: "newton-method"
 ---
 
 # 牛顿法优化算法
