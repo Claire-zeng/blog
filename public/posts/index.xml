@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 数值优化学习笔记</title><link>https://claire-zeng.github.io/blog/posts/</link><description>Recent content in Posts on 数值优化学习笔记</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 16 Jan 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://claire-zeng.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>牛顿法优化算法</title><link>https://claire-zeng.github.io/blog/posts/newton-method/</link><pubDate>Tue, 16 Jan 2024 00:00:00 +0000</pubDate><guid>https://claire-zeng.github.io/blog/posts/newton-method/</guid><description>牛顿法优化算法 牛顿法是一种基于二阶信息的优化算法，相比梯度下降具有更快的收敛速度。
+算法原理 牛顿法利用函数的二阶导数信息来构造更好的搜索方向。对于目标函数 $f(x)$，牛顿法的更新公式为：
+$$x_{k+1} = x_k - H^{-1}(x_k) \nabla f(x_k)$$
+其中：
+$H(x_k)$ 是函数在 $x_k$ 处的Hessian矩阵 $\nabla f(x_k)$ 是梯度向量 优势与特点 二次收敛：在最优解附近具有二次收敛速度 二阶信息：利用Hessian矩阵提供更精确的局部信息 自适应步长：不需要手动设置学习率 代码实现 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 import numpy as np from scipy.</description></item><item><title>梯度下降算法详解</title><link>https://claire-zeng.github.io/blog/posts/gradient-descent/</link><pubDate>Mon, 15 Jan 2024 00:00:00 +0000</pubDate><guid>https://claire-zeng.github.io/blog/posts/gradient-descent/</guid><description>梯度下降算法详解 梯度下降是数值优化中最基础和重要的算法之一。本文将详细介绍梯度下降的原理、实现和应用。
+算法原理 梯度下降的核心思想是沿着目标函数的负梯度方向进行搜索，以找到函数的局部最小值。
+对于目标函数 $f(x)$，梯度下降的更新公式为：
+$$x_{k+1} = x_k - \alpha \nabla f(x_k)$$
+其中：
+$x_k$ 是第 $k$ 次迭代的参数值 $\alpha$ 是学习率 $\nabla f(x_k)$ 是函数在 $x_k$ 处的梯度 代码实现 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 import numpy as np import matplotlib.</description></item></channel></rss>

@@ -1,0 +1,36 @@
+{{ define "main" }}
+<div class="home-page">
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">数值优化学习笔记</h1>
+            <p class="hero-subtitle">探索数学之美，理解优化算法</p>
+        </div>
+    </section>
+
+    <section class="recent-posts">
+        <h2>最新文章</h2>
+        <div class="posts-grid">
+            {{ range first 6 .Site.RegularPages }}
+            <article class="post-card">
+                <div class="post-meta">
+                    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年1月2日" }}</time>
+                    {{ if .Params.categories }}
+                    <span class="category">{{ index .Params.categories 0 }}</span>
+                    {{ end }}
+                </div>
+                <h3 class="post-title">
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                </h3>
+                <p class="post-excerpt">{{ .Summary }}</p>
+                <div class="post-tags">
+                    {{ range .Params.tags }}
+                    <span class="tag">{{ . }}</span>
+                    {{ end }}
+                </div>
+            </article>
+            {{ end }}
+        </div>
+    </section>
+</div>
+{{ end }}
+

@@ -1,0 +1,53 @@
+baseURL = "https://claire-zeng.github.io/blog/"
+languageCode = "zh-cn"
+title = "数值优化学习笔记"
+theme = "numerical-theme"
+
+# 环境配置
+[params]
+  description = "数值优化算法学习笔记和心得"
+  author = "Claire-zeng"
+  github = "https://github.com/Claire-zeng"
+  
+  # 部署环境配置
+  [params.deploy]
+    # 本地开发环境
+    local = false
+    # GitHub Pages环境
+    github = true
+
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "首页"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    identifier = "categories"
+    name = "分类"
+    url = "/categories/"
+    weight = 2
+  [[menu.main]]
+    identifier = "tags"
+    name = "标签"
+    url = "/tags/"
+    weight = 3
+  [[menu.main]]
+    identifier = "about"
+    name = "关于"
+    url = "/about/"
+    weight = 4
+
+[markup]
+  [markup.highlight]
+    style = "tomorrow"
+    lineNos = true
+    lineNumbersInTable = true
+    noClasses = false
+    noHl = false
+    hlLines = ""
+    hlInverse = false
+
+# GitHub Pages 配置
+[build]
+  writeStats = true
