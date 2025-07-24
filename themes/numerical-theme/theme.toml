@@ -3,19 +3,19 @@
 
 name = "Numerical Theme"
 license = "MIT"
-licenselink = "https://github.com/yourname/numerical-theme/blob/master/LICENSE"
+licenselink = "https://github.com/Claire-zeng/blog/blob/main/LICENSE"
 description = "A modern Hugo theme for numerical optimization and mathematical content"
-homepage = "https://example.com/"
+homepage = "https://claire-zeng.github.io/blog/"
 tags = ["mathematics", "optimization", "academic", "responsive"]
 features = ["mathematical-formulas", "code-highlighting", "responsive-design"]
 min_version = "0.80.0"
 
 [author]
-  name = "Your Name"
-  homepage = "https://example.com/"
+  name = "Claire-zeng"
+  homepage = "https://github.com/Claire-zeng"
 
 # If porting an existing theme
 [original]
   name = "Numerical Theme"
-  homepage = "https://github.com/yourname/numerical-theme"
-  repo = "https://github.com/yourname/numerical-theme"
+  homepage = "https://github.com/Claire-zeng/blog"
+  repo = "https://github.com/Claire-zeng/blog"
