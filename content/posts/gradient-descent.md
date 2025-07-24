@@ -5,6 +5,8 @@ categories: ["优化算法"]
 tags: ["梯度下降", "机器学习", "数值优化"]
 draft: false
 slug: "gradient-descent"
+description: "深入解析梯度下降算法的原理与实现，从数学公式到Python代码，全面掌握这一数值优化的基础算法。"
+image: "📈"
 ---
 
 # 梯度下降算法详解

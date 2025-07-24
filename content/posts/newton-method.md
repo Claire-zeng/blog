@@ -5,6 +5,8 @@ categories: ["优化算法"]
 tags: ["牛顿法", "二阶优化", "数值优化"]
 draft: false
 slug: "newton-method"
+description: "学习牛顿法这一基于二阶信息的高效优化算法，了解其二次收敛特性和实际应用场景。"
+image: "🎯"
 ---
 
 # 牛顿法优化算法
