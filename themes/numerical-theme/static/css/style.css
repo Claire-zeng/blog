@@ -361,6 +361,94 @@ body {
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
+/* 代码高亮样式 */
+.highlight {
+    background: #2d3748;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 1.5rem 0;
+}
+
+.chroma {
+    background: #2d3748;
+    color: #e2e8f0;
+}
+
+.lntable {
+    border-spacing: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    width: 100%;
+}
+
+.lntd {
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+/* 行号样式 */
+.lntd:first-child {
+    width: 50px;
+    user-select: none;
+    vertical-align: top;
+}
+
+.lnt {
+    color: #718096;
+    display: block;
+    padding: 0 0.75rem 0 0.5rem;
+    text-align: right;
+    background: #1a202c;
+    border-right: 1px solid #4a5568;
+    font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+/* 代码内容样式 */
+.lntd:last-child {
+    width: 100%;
+}
+
+.lntd:last-child pre {
+    margin: 0;
+    padding: 0.75rem;
+    background: transparent;
+    overflow-x: auto;
+}
+
+/* 通用代码块样式 */
+pre {
+    background: #2d3748;
+    color: #e2e8f0;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+code {
+    background: #e2e8f0;
+    color: #2d3748;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+    font-size: 0.9rem;
+}
+
+/* 行内代码在pre标签内时保持原色 */
+pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+}
+
 /* 页脚 */
 .site-footer {
     background: #333;
