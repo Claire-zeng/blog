@@ -51,7 +51,7 @@
 对于目标函数 $f(x)$，梯度下降的更新公式为：
 $$x_{k+1} = x_k - \alpha \nabla f(x_k)$$
 其中：
-$x_k$ 是第 $k$ 次迭代的参数值 $\alpha$ 是学习率 $\nabla f(x_k)$ 是函数在 $x_k$ 处的梯度 代码实现 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 import numpy as np import matplotlib.</p>
+$x_k$ 是第 $k$ 次迭代的参数值 $\alpha$ 是学习率 $\nabla f(x_k)$ 是函数在 $x_k$ 处的梯度 代码实现 import numpy as np import matplotlib.pyplot as plt def gradient_descent(f, grad_f, x0, alpha=0.01, max_iter=1000, tol=1e-6): """ 梯度下降算法实现 参数: f: 目标函数 grad_f: 梯度函数 x0: 初始点 alpha: 学习率 max_iter: 最大迭代次数 tol: 收敛容差 返回: x: 最优解 history: 迭代历史 """ x = x0 history = [x.copy()] for i in range(max_iter): grad = grad_f(x) x_new = x - alpha * grad if np.</p>
 <div class=post-tags>
 <span class=tag>梯度下降</span>
 <span class=tag>机器学习</span>

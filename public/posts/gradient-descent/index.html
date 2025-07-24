@@ -58,57 +58,7 @@
 <li>$\nabla f(x_k)$ 是函数在 $x_k$ 处的梯度</li>
 </ul>
 <h2 id=代码实现>代码实现</h2>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span><span class=lnt>15
-</span><span class=lnt>16
-</span><span class=lnt>17
-</span><span class=lnt>18
-</span><span class=lnt>19
-</span><span class=lnt>20
-</span><span class=lnt>21
-</span><span class=lnt>22
-</span><span class=lnt>23
-</span><span class=lnt>24
-</span><span class=lnt>25
-</span><span class=lnt>26
-</span><span class=lnt>27
-</span><span class=lnt>28
-</span><span class=lnt>29
-</span><span class=lnt>30
-</span><span class=lnt>31
-</span><span class=lnt>32
-</span><span class=lnt>33
-</span><span class=lnt>34
-</span><span class=lnt>35
-</span><span class=lnt>36
-</span><span class=lnt>37
-</span><span class=lnt>38
-</span><span class=lnt>39
-</span><span class=lnt>40
-</span><span class=lnt>41
-</span><span class=lnt>42
-</span><span class=lnt>43
-</span><span class=lnt>44
-</span><span class=lnt>45
-</span><span class=lnt>46
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span>
 <span class=kn>import</span> <span class=nn>matplotlib.pyplot</span> <span class=k>as</span> <span class=nn>plt</span>
 
 <span class=k>def</span> <span class=nf>gradient_descent</span><span class=p>(</span><span class=n>f</span><span class=p>,</span> <span class=n>grad_f</span><span class=p>,</span> <span class=n>x0</span><span class=p>,</span> <span class=n>alpha</span><span class=o>=</span><span class=mf>0.01</span><span class=p>,</span> <span class=n>max_iter</span><span class=o>=</span><span class=mi>1000</span><span class=p>,</span> <span class=n>tol</span><span class=o>=</span><span class=mf>1e-6</span><span class=p>):</span>
@@ -154,9 +104,7 @@
 
 <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;最优解: x = </span><span class=si>{</span><span class=n>x_opt</span><span class=si>:</span><span class=s2>.6f</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
 <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;最优值: f(x) = </span><span class=si>{</span><span class=n>f</span><span class=p>(</span><span class=n>x_opt</span><span class=p>)</span><span class=si>:</span><span class=s2>.6f</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=收敛性分析>收敛性分析</h2>
+</code></pre></div><h2 id=收敛性分析>收敛性分析</h2>
 <p>梯度下降的收敛性取决于以下几个因素：</p>
 <ol>
 <li><strong>学习率选择</strong>：学习率过大可能导致发散，过小则收敛缓慢</li>

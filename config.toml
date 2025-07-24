@@ -41,8 +41,8 @@ theme = "numerical-theme"
 [markup]
   [markup.highlight]
     style = "tomorrow"
-    lineNos = true
-    lineNumbersInTable = true
+    lineNos = false
+    lineNumbersInTable = false
     noClasses = false
     noHl = false
     hlLines = ""

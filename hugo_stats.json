@@ -24,11 +24,8 @@
       "section",
       "span",
       "strong",
-      "table",
-      "td",
       "time",
       "title",
-      "tr",
       "ul"
     ],
     "classes": [
@@ -42,8 +39,6 @@
       "highlight",
       "home-page",
       "list-page",
-      "lntable",
-      "lntd",
       "navbar",
       "navbar-brand",
       "navbar-item",
