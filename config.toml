@@ -1,13 +1,14 @@
 baseURL = "https://claire-zeng.github.io/blog/"
 languageCode = "zh-cn"
-title = "数值优化学习笔记"
-theme = "numerical-theme"
+title = "Claire的技术学习笔记"
+theme = "modern-tech-theme"
 
 # 环境配置
 [params]
-  description = "数值优化算法学习笔记和心得"
+  description = "记录技术学习历程，分享编程心得与算法思考"
   author = "Claire-zeng"
   github = "https://github.com/Claire-zeng"
+  subtitle = "探索技术之美，记录学习之路"
   
   # 部署环境配置
   [params.deploy]

@@ -2,7 +2,7 @@
 <head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<title>梯度下降 - Claire的技术学习笔记</title>
+<title>拟牛顿法 - Claire的技术学习笔记</title>
 <script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:!0,processEnvironments:!0},options:{skipHtmlTags:['script','noscript','style','textarea','pre']}}</script>
 <script id=MathJax-script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js></script>
 <link href=https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css rel=stylesheet>
@@ -34,29 +34,28 @@
 <div class=list-page>
 <header class=page-header>
 <h1 class=page-title>
-标签：梯度下降
+标签：拟牛顿法
 </h1>
 </header>
 <div class=posts-list>
 <article class=post-item>
 <div class=post-meta>
-<time datetime=2024-01-15>2024年1月15日</time>
+<time datetime=2024-01-16>2024年1月16日</time>
 <span class=category>数值优化</span>
 </div>
 <h2 class=post-title>
-<a href=/blog/posts/gradient-descent/>梯度下降算法详解</a>
+<a href=/blog/posts/newton-method/>牛顿法优化算法</a>
 </h2>
-<p class=post-excerpt>梯度下降算法详解 梯度下降是数值优化中最基础和重要的算法之一。本文将详细介绍梯度下降的原理、实现和应用。
-算法原理 梯度下降的核心思想是沿着目标函数的负梯度方向进行搜索，以找到函数的局部最小值。
-对于目标函数 $f(x)$，梯度下降的更新公式为：
-$$x_{k+1} = x_k - \alpha \nabla f(x_k)$$
+<p class=post-excerpt>牛顿法优化算法 牛顿法是一种基于二阶信息的优化算法，相比梯度下降具有更快的收敛速度。
+算法原理 牛顿法利用函数的二阶导数信息来构造更好的搜索方向。对于目标函数 $f(x)$，牛顿法的更新公式为：
+$$x_{k+1} = x_k - H^{-1}(x_k) \nabla f(x_k)$$
 其中：
-$x_k$ 是第 $k$ 次迭代的参数值 $\alpha$ 是学习率 $\nabla f(x_k)$ 是函数在 $x_k$ 处的梯度 代码实现 import numpy as np import matplotlib.pyplot as plt def gradient_descent(f, grad_f, x0, alpha=0.01, max_iter=1000, tol=1e-6): """ 梯度下降算法实现 参数: f: 目标函数 grad_f: 梯度函数 x0: 初始点 alpha: 学习率 max_iter: 最大迭代次数 tol: 收敛容差 返回: x: 最优解 history: 迭代历史 """ x = x0 history = [x.copy()] for i in range(max_iter): grad = grad_f(x) x_new = x - alpha * grad if np.</p>
+$H(x_k)$ 是函数在 $x_k$ 处的Hessian矩阵 $\nabla f(x_k)$ 是梯度向量 优势与特点 二次收敛：在最优解附近具有二次收敛速度 二阶信息：利用Hessian矩阵提供更精确的局部信息 自适应步长：不需要手动设置学习率 代码实现 import numpy as np from scipy.linalg import inv def newton_method(f, grad_f, hess_f, x0, max_iter=100, tol=1e-6): """ 牛顿法实现 参数: f: 目标函数 grad_f: 梯度函数 hess_f: Hessian函数 x0: 初始点 max_iter: 最大迭代次数 tol: 收敛容差 """ x = x0 history = [x.copy()] for i in range(max_iter): grad = grad_f(x) hess = hess_f(x) # 求解线性方程组 H(x) * d = -grad(x) try: d = np.</p>
 <div class=post-tags>
-<span class=tag>梯度下降</span>
-<span class=tag>机器学习</span>
-<span class=tag>一阶优化</span>
-<span class=tag>收敛性分析</span>
+<span class=tag>牛顿法</span>
+<span class=tag>二阶优化</span>
+<span class=tag>拟牛顿法</span>
+<span class=tag>Hessian矩阵</span>
 </div>
 </article>
 </div>

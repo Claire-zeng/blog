@@ -1,8 +1,8 @@
 ---
 title: "牛顿法优化算法"
 date: 2024-01-16
-categories: ["优化算法"]
-tags: ["牛顿法", "二阶优化", "数值优化"]
+categories: ["数值优化"]
+tags: ["牛顿法", "二阶优化", "拟牛顿法", "Hessian矩阵"]
 draft: false
 slug: "newton-method"
 description: "学习牛顿法这一基于二阶信息的高效优化算法，了解其二次收敛特性和实际应用场景。"
