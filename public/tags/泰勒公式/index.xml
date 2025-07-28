@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>泰勒公式 on Claire的技术学习笔记</title>
+    <link>http://localhost:1313/blog/tags/%E6%B3%B0%E5%8B%92%E5%85%AC%E5%BC%8F/</link>
+    <description>Recent content in 泰勒公式 on Claire的技术学习笔记</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 27 Jul 2025 23:35:44 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/blog/tags/%E6%B3%B0%E5%8B%92%E5%85%AC%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>无约束优化基础(一)</title>
+      <link>http://localhost:1313/blog/posts/%E6%97%A0%E7%BA%A6%E6%9D%9F%E4%BC%98%E5%8C%96%E5%9F%BA%E7%A1%80%E4%B8%80/</link>
+      <pubDate>Sun, 27 Jul 2025 23:35:44 +0800</pubDate>
+      <guid>http://localhost:1313/blog/posts/%E6%97%A0%E7%BA%A6%E6%9D%9F%E4%BC%98%E5%8C%96%E5%9F%BA%E7%A1%80%E4%B8%80/</guid>
+      <description>&lt;h1 id=&#34;无约束优化基础一&#34;&gt;无约束优化基础(一)&lt;/h1&gt;&#xA;&lt;p&gt;在无约束优化中，我们最小化一个依赖于真实值变量的目标函数，并且对这些变量没有任何限制。因此，可以做出如下数学定义&lt;/p&gt;&#xA;&lt;p&gt;$$&#xA;\min_{x}f(x),\quad(1)&#xA;$$&lt;/p&gt;&#xA;&lt;p&gt;其中 $x \in \mathbb{R}^n$ 是一个由 $n ≥ 1$个分量组成的实数向量，并且 $f:\mathbb{R}^n\to\mathbb{R}$ 是一个光滑的函数。&lt;/p&gt;&#xA;&lt;p&gt;通常情况下，我们无法直接得到整个函数 $f$ 的全局视野。能得到的只有一系列点 $x_0,x_1,x_2,\ldots.$ 的函数值以及相应的导数值。幸运的是，优化算法能够在尽量减少计算开销以及内存的情况下，去寻找一个可以信赖的解。&lt;/p&gt;&#xA;&lt;h2 id=&#34;什么是解&#34;&gt;什么是解？&lt;/h2&gt;&#xA;&lt;p&gt;如果我们能够找到函数$f$的全局最小值点，也就是使得函数取得最小值的地方，那是最完美的。一个正式的定义是&lt;/p&gt;&#xA;&lt;p&gt;$$\text{A point } x^* \text{ is a global minimizer if } f(x^*) \leq f(x) \text{ for all } x$$&lt;/p&gt;&#xA;&lt;p&gt;其中 $x$ 在整个 $\mathbb{R}^n$，或者至少在感兴趣的范围内。由于我们对 $f$ 的了解通常只是局部的，因此全局的最小值往往难以找到。并且由于我们的算法并不会访问很多点(这也是算法本身希望的)，我们通常对 $f$ 的整体形状没有好的认识，同时我们永远无法确定该函数在某个未被算法采样的区域内是否出现了急剧抖动。所以，大多数算法仅能够找到一个局部最小值，即在其邻域内达到 $f$ 最小值的点。从而有&lt;/p&gt;&#xA;&lt;p&gt;$$\text{A point } x^* \text{ is a local minimizer if there is a neighborhood } \mathcal{N} \text{ of } x^* \text{ such that } f(x^*) \leq f(x) \text{ for all } x \in \mathcal{N}$$&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

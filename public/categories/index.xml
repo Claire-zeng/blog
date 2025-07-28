@@ -1,1 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Categories on Claire的技术学习笔记</title><link>https://claire-zeng.github.io/blog/categories/</link><description>Recent content in Categories on Claire的技术学习笔记</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 16 Jan 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://claire-zeng.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml"/><item><title>数值优化</title><link>https://claire-zeng.github.io/blog/categories/%E6%95%B0%E5%80%BC%E4%BC%98%E5%8C%96/</link><pubDate>Tue, 16 Jan 2024 00:00:00 +0000</pubDate><guid>https://claire-zeng.github.io/blog/categories/%E6%95%B0%E5%80%BC%E4%BC%98%E5%8C%96/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Claire的技术学习笔记</title>
+    <link>http://localhost:1313/blog/categories/</link>
+    <description>Recent content in Categories on Claire的技术学习笔记</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 27 Jul 2025 23:35:44 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/blog/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>数值优化</title>
+      <link>http://localhost:1313/blog/categories/%E6%95%B0%E5%80%BC%E4%BC%98%E5%8C%96/</link>
+      <pubDate>Sun, 27 Jul 2025 23:35:44 +0800</pubDate>
+      <guid>http://localhost:1313/blog/categories/%E6%95%B0%E5%80%BC%E4%BC%98%E5%8C%96/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
