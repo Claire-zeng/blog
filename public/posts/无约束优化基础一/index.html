@@ -136,8 +136,8 @@
 <p><strong>严格局部极小值的定义</strong></p>
 <p>$$
 \begin{align}
-&amp;\text{A point } x^* \text{ is a strict local minimizer (also called a strong local minimizer) if there is a neighborhood } \mathcal{N} \text{ of } x^* \text{ such that } \\
-&amp;f(x^*) &lt; f(x) \text{ for all } x \in \mathcal{N} \text{ with } x \neq x^*
+&amp;\text{A point } x^* \text{ is a strict local minimizer (also called a strong local minimizer) if there is a neighborhood } \mathcal{N} \text{ of } \\
+&amp;x^* \text{ such that } f(x^*) &lt; f(x) \text{ for all } x \in \mathcal{N} \text{ with } x \neq x^*
 \end{align}
 $$</p>
 </div>
@@ -168,7 +168,12 @@ $$</p>
 <p>另一种局部最小值的定义：</p>
 <div align="center">
 <p><strong>孤立局部极小值的定义</strong></p>
-<p>$$\text{A point } x^* \text{ is an isolated local minimizer if there is a neighborhood } \mathcal{N} \text{ of } x^* \text{ such that } x^* \text{ is the only local minimizer in } \mathcal{N}$$</p>
+<p>$$
+\begin{align}
+&amp;\text{A point } x^* \text{ is an isolated local minimizer if there is a neighborhood } \mathcal{N} \text{ of } x^* \text{ such that } x^* \text{ is the only local} \\
+&amp;\text{minimizer in } \mathcal{N}
+\end{align}
+$$</p>
 </div>
 <h3 id="反例非孤立的严格局部极小值">反例：非孤立的严格局部极小值</h3>
 <blockquote>
@@ -190,7 +195,7 @@ x^4\cos\left(\frac{1}{x}\right)+2x^4 &amp; x\neq0 \\
 <p>从上述的定义来看，找出一个点 $x$ 是否是局部极小值的唯一方法是检查其邻域内的所有点，以确保它们都没有一个更小的函数值。</p>
 <blockquote>
 <p>🚀 <strong>优化策略</strong>: 然而，当函数 $f$ 是光滑的时候，有更加高效且实用的方式去验证一个局部极小值。</p></blockquote>
-<p>特别是当函数 $f$ 是一个连续二阶可微的时候，我们能够仅仅通过检查其梯度 $\nabla f(x^<em>)$ 和 Hessian矩阵 $\nabla^2 f(x^</em>)$ （也就是一阶导和二阶导）来判断 $x$ 是局部极小值。</p>
+<p>特别是当函数 $f$ 是一个连续二阶可微的时候，我们能够仅仅通过检查其梯度 $\nabla f(x^*)$ 和 Hessian矩阵 $\nabla^2 f(x^*)$ （也就是一阶导和二阶导）来判断 $x$ 是局部极小值。</p>
 <p>用于研究光滑函数最小值的数学工具是泰勒公式，因此以下给出一些定理及证明。</p>
 <hr>
 <h2 id="泰勒定理及其应用">泰勒定理及其应用</h2>
@@ -208,7 +213,7 @@ x^4\cos\left(\frac{1}{x}\right)+2x^4 &amp; x\neq0 \\
 <p>$$f(x+p)=f(x)+\nabla f(x)^Tp+\frac{1}{2}p^T\nabla^2f(x+tp)p \tag{4}$$</p>
 </div>
 <blockquote>
-<p>🎯 <strong>应用意义</strong>: 最优性的必要条件是通过假设 $x$ 是局部最小值，然后证明关于 $\nabla f(x^<em>)$ 和 $\nabla^2 f(x^</em>)$ 的事实推导的。</p></blockquote>
+<p>🎯 <strong>应用意义</strong>: 最优性的必要条件是通过假设 $x$ 是局部最小值，然后证明关于 $\nabla f(x^*)$ 和 $\nabla^2 f(x^*)$ 的事实推导的。</p></blockquote>
 <hr>
 <h2 id="证明">证明</h2>
 <h3 id="公式2的证明">公式(2)的证明</h3>
