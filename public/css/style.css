@@ -473,17 +473,108 @@ pre code {
     padding: 1.5rem;
 }
 
-.toc-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #2d3748;
+
+
+.toc-content {
+    font-size: 0.9rem;
+}
+
+/* 目录头部样式 */
+.toc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1rem;
     padding-bottom: 0.75rem;
     border-bottom: 2px solid #e2e8f0;
 }
 
-.toc-content {
-    font-size: 0.9rem;
+.toc-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+}
+
+.toc-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    color: #718096;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toc-toggle:hover {
+    background: #f7fafc;
+    color: #667eea;
+}
+
+/* 目录显示按钮样式 */
+.toc-show-btn {
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-50%) translateX(-20px);
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.toc-show-btn:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+    transform: translateY(-50%) translateX(-18px) scale(1.05);
+}
+
+.toc-show-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
+}
+
+/* 目录隐藏状态 */
+.toc-sidebar.toc-hidden {
+    transform: translateX(-100%);
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* 目录收起时的布局调整 */
+.post-layout.toc-collapsed {
+    padding: 2rem 20px; /* 重置为正常的上下左右padding */
+    gap: 0; /* 移除gap，因为没有目录栏了 */
+    max-width: 1300px; /* 比有目录时(1400px-332px=1068px)更宽 */
+    justify-content: center; /* 居中文章内容 */
+}
+
+.post-layout.toc-collapsed .post {
+    margin: 0 auto; /* 居中显示 */
+    max-width: 1100px; /* 比有目录时的实际文章区域(约1068px)更宽 */
+    width: 100%;
+    flex: 1;
+    min-width: 0;
 }
 
 .toc-list {
@@ -644,10 +735,31 @@ pre code {
         max-height: none;
         order: -1; /* 在移动端将目录放在文章上方 */
         margin-bottom: 1rem;
+        transform: none !important; /* 移动端不使用滑动动画 */
     }
     
     .toc-container {
         padding: 1rem;
+    }
+    
+    .toc-show-btn {
+        display: none; /* 移动端隐藏显示按钮 */
+    }
+    
+    .post-layout.toc-collapsed {
+        padding: 1rem 15px; /* 移动端恢复正常padding */
+        max-width: none; /* 移动端移除最大宽度限制 */
+    }
+    
+    .post-layout.toc-collapsed .post {
+        max-width: 100%; /* 移动端允许全宽 */
+    }
+    
+    .toc-sidebar.toc-hidden {
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        display: none; /* 移动端直接隐藏而不是滑动 */
     }
 } 
 

@@ -61,14 +61,28 @@
             
 <div class="post-layout">
     
-    <aside class="toc-sidebar">
+    <aside class="toc-sidebar" id="toc-sidebar">
         <div class="toc-container">
-            <h3 class="toc-title">📋 目录</h3>
+            <div class="toc-header">
+                <h3 class="toc-title">📋 目录</h3>
+                <button class="toc-toggle" id="toc-toggle" title="隐藏目录">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
             <div class="toc-content" id="toc">
                 
             </div>
         </div>
     </aside>
+
+    
+    <button class="toc-show-btn" id="toc-show-btn" title="显示目录">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
 
     
     <article class="post">
@@ -207,6 +221,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     generateTOC();
     handleTOCScroll();
+    initTOCToggle();
 });
 
 function generateTOC() {
@@ -216,6 +231,7 @@ function generateTOC() {
     
     if (headings.length === 0) {
         document.querySelector('.toc-sidebar').style.display = 'none';
+        document.querySelector('.toc-show-btn').style.display = 'none';
         document.querySelector('.post').style.marginLeft = '0';
         return;
     }
@@ -296,6 +312,43 @@ function handleTOCScroll() {
             }
         });
     });
+}
+
+function initTOCToggle() {
+    const tocSidebar = document.getElementById('toc-sidebar');
+    const tocToggle = document.getElementById('toc-toggle');
+    const tocShowBtn = document.getElementById('toc-show-btn');
+    const postLayout = document.querySelector('.post-layout');
+    
+    
+    const isHidden = localStorage.getItem('toc-hidden') === 'true';
+    if (isHidden) {
+        hideTOC();
+    }
+    
+    
+    tocToggle.addEventListener('click', function() {
+        hideTOC();
+        localStorage.setItem('toc-hidden', 'true');
+    });
+    
+    
+    tocShowBtn.addEventListener('click', function() {
+        showTOC();
+        localStorage.setItem('toc-hidden', 'false');
+    });
+    
+    function hideTOC() {
+        tocSidebar.classList.add('toc-hidden');
+        tocShowBtn.classList.add('show');
+        postLayout.classList.add('toc-collapsed');
+    }
+    
+    function showTOC() {
+        tocSidebar.classList.remove('toc-hidden');
+        tocShowBtn.classList.remove('show');
+        postLayout.classList.remove('toc-collapsed');
+    }
 }
 </script>
 

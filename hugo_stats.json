@@ -90,8 +90,11 @@
       "title",
       "toc-container",
       "toc-content",
+      "toc-header",
+      "toc-show-btn",
       "toc-sidebar",
-      "toc-title"
+      "toc-title",
+      "toc-toggle"
     ],
     "ids": [
       "-web开发",
@@ -103,6 +106,9 @@
       "back-to-top",
       "post-content",
       "toc",
+      "toc-show-btn",
+      "toc-sidebar",
+      "toc-toggle",
       "什么是解",
       "代码实现",
       "优势与特点",
