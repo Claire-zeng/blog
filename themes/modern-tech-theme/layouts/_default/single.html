@@ -84,43 +84,12 @@ function generateTOC() {
         return;
     }
     
-    let tocHTML = '<ul class="toc-list">';
-    let currentLevel = 0;
-    
-    headings.forEach((heading, index) => {
-        const level = parseInt(heading.tagName.charAt(1));
-        const text = heading.textContent;
-        const id = 'heading-' + index;
-        
-        // 为标题添加ID
-        heading.id = id;
-        
-        // 处理层级
-        if (level > currentLevel) {
-            for (let i = currentLevel; i < level; i++) {
-                if (i > 0) tocHTML += '<ul class="toc-list">';
-            }
-        } else if (level < currentLevel) {
-            for (let i = currentLevel; i > level; i--) {
-                tocHTML += '</ul>';
-            }
-        }
-        
-        tocHTML += `<li class="toc-item toc-level-${level}">
-                      <a href="#${id}" class="toc-link" data-target="${id}">${text}</a>
-                    </li>`;
-        
-        currentLevel = level;
-    });
-    
-    // 关闭所有未关闭的ul标签
-    for (let i = 0; i < currentLevel; i++) {
-        tocHTML += '</ul>';
-    }
-    
+    // 构建目录树结构
+    const tocTree = buildTocTree(headings);
+    const tocHTML = renderTocTree(tocTree);
     toc.innerHTML = tocHTML;
     
-    // 添加点击事件
+    // 添加点击事件 - 目录链接
     document.querySelectorAll('.toc-link').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -135,6 +104,108 @@ function generateTOC() {
             }
         });
     });
+    
+    // 添加折叠/展开功能
+    document.querySelectorAll('.toc-toggle-icon').forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const parentItem = this.closest('.toc-item');
+            const submenu = parentItem.querySelector('.toc-submenu');
+            
+            if (submenu) {
+                const isCollapsed = submenu.classList.contains('collapsed');
+                
+                if (isCollapsed) {
+                    // 展开
+                    submenu.classList.remove('collapsed');
+                    this.textContent = '▼';
+                    this.classList.remove('collapsed');
+                } else {
+                    // 折叠
+                    submenu.classList.add('collapsed');
+                    this.textContent = '▶';
+                    this.classList.add('collapsed');
+                }
+            }
+        });
+    });
+    
+    // 默认折叠较深的层级（h4及以下）
+    document.querySelectorAll('.toc-level-4, .toc-level-5, .toc-level-6').forEach(item => {
+        const submenu = item.querySelector('.toc-submenu');
+        const toggle = item.querySelector('.toc-toggle-icon');
+        if (submenu && toggle) {
+            submenu.classList.add('collapsed');
+            toggle.textContent = '▶';  // 向右箭头表示折叠状态
+            toggle.classList.add('collapsed');
+        }
+    });
+}
+
+function buildTocTree(headings) {
+    const tree = [];
+    const stack = [];
+    
+    headings.forEach((heading, index) => {
+        const level = parseInt(heading.tagName.charAt(1));
+        const text = heading.textContent;
+        const id = 'heading-' + index;
+        
+        // 为标题添加ID
+        heading.id = id;
+        
+        const node = {
+            id,
+            text,
+            level,
+            children: []
+        };
+        
+        // 找到正确的父节点
+        while (stack.length > 0 && stack[stack.length - 1].level >= level) {
+            stack.pop();
+        }
+        
+        if (stack.length === 0) {
+            tree.push(node);
+        } else {
+            stack[stack.length - 1].children.push(node);
+        }
+        
+        stack.push(node);
+    });
+    
+    return tree;
+}
+
+function renderTocTree(tree) {
+    if (tree.length === 0) return '';
+    
+    let html = '<ul class="toc-list">';
+    
+    tree.forEach(node => {
+        const hasChildren = node.children.length > 0;
+        const toggleIcon = hasChildren ? 
+            '<span class="toc-toggle-icon">▼</span>' : 
+            '<span class="toc-no-children"></span>';
+            
+        html += `<li class="toc-item toc-level-${node.level}">
+                   <div class="toc-item-wrapper">
+                       ${toggleIcon}
+                       <a href="#${node.id}" class="toc-link" data-target="${node.id}">${node.text}</a>
+                   </div>`;
+        
+        if (hasChildren) {
+            html += `<div class="toc-submenu">${renderTocTree(node.children)}</div>`;
+        }
+        
+        html += '</li>';
+    });
+    
+    html += '</ul>';
+    return html;
 }
 
 function handleTOCScroll() {

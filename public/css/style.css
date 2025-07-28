@@ -583,15 +583,67 @@ pre code {
     padding: 0;
 }
 
-.toc-list .toc-list {
+.toc-submenu .toc-list {
     margin-left: 1rem;
     margin-top: 0.25rem;
+    padding-left: 0.5rem;
+    border-left: 2px solid #e2e8f0;
 }
 
 .toc-item {
     margin: 0.25rem 0;
 }
 
+/* 目录项包装器 */
+.toc-item-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* 折叠/展开图标 */
+.toc-toggle-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    color: #718096;
+    transition: all 0.2s ease;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.toc-toggle-icon:hover {
+    background: #f7fafc;
+    color: #667eea;
+}
+
+/* 移除旋转，直接使用不同的箭头字符 */
+
+/* 无子项的占位 */
+.toc-no-children {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* 子菜单样式 */
+.toc-submenu {
+    max-height: 1000px;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 1;
+}
+
+.toc-submenu.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
+/* 调整目录链接样式以适应新结构 */
 .toc-link {
     display: block;
     color: #4a5568;
@@ -601,6 +653,7 @@ pre code {
     transition: all 0.2s ease;
     line-height: 1.4;
     border-left: 3px solid transparent;
+    flex: 1;
 }
 
 .toc-link:hover {

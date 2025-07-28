@@ -236,40 +236,9 @@ function generateTOC() {
         return;
     }
     
-    let tocHTML = '<ul class="toc-list">';
-    let currentLevel = 0;
     
-    headings.forEach((heading, index) => {
-        const level = parseInt(heading.tagName.charAt(1));
-        const text = heading.textContent;
-        const id = 'heading-' + index;
-        
-        
-        heading.id = id;
-        
-        
-        if (level > currentLevel) {
-            for (let i = currentLevel; i < level; i++) {
-                if (i > 0) tocHTML += '<ul class="toc-list">';
-            }
-        } else if (level < currentLevel) {
-            for (let i = currentLevel; i > level; i--) {
-                tocHTML += '</ul>';
-            }
-        }
-        
-        tocHTML += `<li class="toc-item toc-level-${level}">
-                      <a href="#${id}" class="toc-link" data-target="${id}">${text}</a>
-                    </li>`;
-        
-        currentLevel = level;
-    });
-    
-    
-    for (let i = 0; i < currentLevel; i++) {
-        tocHTML += '</ul>';
-    }
-    
+    const tocTree = buildTocTree(headings);
+    const tocHTML = renderTocTree(tocTree);
     toc.innerHTML = tocHTML;
     
     
@@ -287,6 +256,108 @@ function generateTOC() {
             }
         });
     });
+    
+    
+    document.querySelectorAll('.toc-toggle-icon').forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const parentItem = this.closest('.toc-item');
+            const submenu = parentItem.querySelector('.toc-submenu');
+            
+            if (submenu) {
+                const isCollapsed = submenu.classList.contains('collapsed');
+                
+                if (isCollapsed) {
+                    
+                    submenu.classList.remove('collapsed');
+                    this.textContent = '▼';
+                    this.classList.remove('collapsed');
+                } else {
+                    
+                    submenu.classList.add('collapsed');
+                    this.textContent = '▶';
+                    this.classList.add('collapsed');
+                }
+            }
+        });
+    });
+    
+    
+    document.querySelectorAll('.toc-level-4, .toc-level-5, .toc-level-6').forEach(item => {
+        const submenu = item.querySelector('.toc-submenu');
+        const toggle = item.querySelector('.toc-toggle-icon');
+        if (submenu && toggle) {
+            submenu.classList.add('collapsed');
+            toggle.textContent = '▶';  
+            toggle.classList.add('collapsed');
+        }
+    });
+}
+
+function buildTocTree(headings) {
+    const tree = [];
+    const stack = [];
+    
+    headings.forEach((heading, index) => {
+        const level = parseInt(heading.tagName.charAt(1));
+        const text = heading.textContent;
+        const id = 'heading-' + index;
+        
+        
+        heading.id = id;
+        
+        const node = {
+            id,
+            text,
+            level,
+            children: []
+        };
+        
+        
+        while (stack.length > 0 && stack[stack.length - 1].level >= level) {
+            stack.pop();
+        }
+        
+        if (stack.length === 0) {
+            tree.push(node);
+        } else {
+            stack[stack.length - 1].children.push(node);
+        }
+        
+        stack.push(node);
+    });
+    
+    return tree;
+}
+
+function renderTocTree(tree) {
+    if (tree.length === 0) return '';
+    
+    let html = '<ul class="toc-list">';
+    
+    tree.forEach(node => {
+        const hasChildren = node.children.length > 0;
+        const toggleIcon = hasChildren ? 
+            '<span class="toc-toggle-icon">▼</span>' : 
+            '<span class="toc-no-children"></span>';
+            
+        html += `<li class="toc-item toc-level-${node.level}">
+                   <div class="toc-item-wrapper">
+                       ${toggleIcon}
+                       <a href="#${node.id}" class="toc-link" data-target="${node.id}">${node.text}</a>
+                   </div>`;
+        
+        if (hasChildren) {
+            html += `<div class="toc-submenu">${renderTocTree(node.children)}</div>`;
+        }
+        
+        html += '</li>';
+    });
+    
+    html += '</ul>';
+    return html;
 }
 
 function handleTOCScroll() {
