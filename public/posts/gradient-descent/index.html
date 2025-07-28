@@ -59,32 +59,44 @@
     <main class="site-main">
         <div class="container">
             
-<article class="post">
-    <header class="post-header">
-        <h1 class="post-title">梯度下降算法详解</h1>
-        <div class="post-meta">
-            <time datetime="2024-01-15">2024年1月15日</time>
-            
-            <span class="category">数值优化</span>
-            
+<div class="post-layout">
+    
+    <aside class="toc-sidebar">
+        <div class="toc-container">
+            <h3 class="toc-title">📋 目录</h3>
+            <div class="toc-content" id="toc">
+                
+            </div>
         </div>
-        
-        <div class="post-tags">
-            
-            <span class="tag">梯度下降</span>
-            
-            <span class="tag">机器学习</span>
-            
-            <span class="tag">一阶优化</span>
-            
-            <span class="tag">收敛性分析</span>
-            
-        </div>
-        
-    </header>
+    </aside>
 
-    <div class="post-content">
-        <h1 id="梯度下降算法详解">梯度下降算法详解</h1>
+    
+    <article class="post">
+        <header class="post-header">
+            <h1 class="post-title">梯度下降算法详解</h1>
+            <div class="post-meta">
+                <time datetime="2024-01-15">2024年1月15日</time>
+                
+                <span class="category">数值优化</span>
+                
+            </div>
+            
+            <div class="post-tags">
+                
+                <span class="tag">梯度下降</span>
+                
+                <span class="tag">机器学习</span>
+                
+                <span class="tag">一阶优化</span>
+                
+                <span class="tag">收敛性分析</span>
+                
+            </div>
+            
+        </header>
+
+        <div class="post-content" id="post-content">
+            <h1 id="梯度下降算法详解">梯度下降算法详解</h1>
 <p>梯度下降是数值优化中最基础和重要的算法之一。本文将详细介绍梯度下降的原理、实现和应用。</p>
 <h2 id="算法原理">算法原理</h2>
 <p>梯度下降的核心思想是沿着目标函数的负梯度方向进行搜索，以找到函数的局部最小值。</p>
@@ -163,19 +175,117 @@ $$x_{k+1} = x_k - v_{k+1}$$</p>
 <h2 id="总结">总结</h2>
 <p>梯度下降是数值优化的基础算法，理解其原理和实现对于深入学习机器学习算法至关重要。在实际应用中，需要根据具体问题选择合适的变体和参数设置。</p>
 
-    </div>
-
-    <footer class="post-footer">
-        <div class="post-navigation">
-            
-            
-            <a href="/blog/posts/newton-method/" class="next-post">
-                牛顿法优化算法 →
-            </a>
-            
         </div>
-    </footer>
-</article>
+
+        <footer class="post-footer">
+            <div class="post-navigation">
+                
+                
+                <a href="/blog/posts/newton-method/" class="next-post">
+                    牛顿法优化算法 →
+                </a>
+                
+            </div>
+        </footer>
+    </article>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    generateTOC();
+    handleTOCScroll();
+});
+
+function generateTOC() {
+    const content = document.getElementById('post-content');
+    const toc = document.getElementById('toc');
+    const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    
+    if (headings.length === 0) {
+        document.querySelector('.toc-sidebar').style.display = 'none';
+        document.querySelector('.post').style.marginLeft = '0';
+        return;
+    }
+    
+    let tocHTML = '<ul class="toc-list">';
+    let currentLevel = 0;
+    
+    headings.forEach((heading, index) => {
+        const level = parseInt(heading.tagName.charAt(1));
+        const text = heading.textContent;
+        const id = 'heading-' + index;
+        
+        
+        heading.id = id;
+        
+        
+        if (level > currentLevel) {
+            for (let i = currentLevel; i < level; i++) {
+                if (i > 0) tocHTML += '<ul class="toc-list">';
+            }
+        } else if (level < currentLevel) {
+            for (let i = currentLevel; i > level; i--) {
+                tocHTML += '</ul>';
+            }
+        }
+        
+        tocHTML += `<li class="toc-item toc-level-${level}">
+                      <a href="#${id}" class="toc-link" data-target="${id}">${text}</a>
+                    </li>`;
+        
+        currentLevel = level;
+    });
+    
+    
+    for (let i = 0; i < currentLevel; i++) {
+        tocHTML += '</ul>';
+    }
+    
+    toc.innerHTML = tocHTML;
+    
+    
+    document.querySelectorAll('.toc-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('data-target');
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+                
+                
+                document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+}
+
+function handleTOCScroll() {
+    const headings = document.querySelectorAll('#post-content h1, #post-content h2, #post-content h3, #post-content h4, #post-content h5, #post-content h6');
+    const tocLinks = document.querySelectorAll('.toc-link');
+    
+    if (headings.length === 0) return;
+    
+    window.addEventListener('scroll', function() {
+        let currentHeading = '';
+        
+        headings.forEach(heading => {
+            const rect = heading.getBoundingClientRect();
+            if (rect.top <= 100) {
+                currentHeading = heading.id;
+            }
+        });
+        
+        tocLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-target') === currentHeading) {
+                link.classList.add('active');
+            }
+        });
+    });
+}
+</script>
 
         </div>
     </main>

@@ -59,95 +59,301 @@
     <main class="site-main">
         <div class="container">
             
-<article class="post">
-    <header class="post-header">
-        <h1 class="post-title">无约束优化基础(一)</h1>
-        <div class="post-meta">
-            <time datetime="2025-07-27">2025年7月27日</time>
-            
-            <span class="category">数值优化</span>
-            
+<div class="post-layout">
+    
+    <aside class="toc-sidebar">
+        <div class="toc-container">
+            <h3 class="toc-title">📋 目录</h3>
+            <div class="toc-content" id="toc">
+                
+            </div>
         </div>
-        
-        <div class="post-tags">
-            
-            <span class="tag">学习笔记</span>
-            
-            <span class="tag">泰勒公式</span>
-            
-        </div>
-        
-    </header>
+    </aside>
 
-    <div class="post-content">
-        <h1 id="无约束优化基础一">无约束优化基础(一)</h1>
-<p>在无约束优化中，我们最小化一个依赖于真实值变量的目标函数，并且对这些变量没有任何限制。因此，可以做出如下数学定义</p>
-<p>$$
-\min_{x}f(x),\quad(1)
-$$</p>
-<p>其中 $x \in \mathbb{R}^n$ 是一个由 $n ≥ 1$个分量组成的实数向量，并且 $f:\mathbb{R}^n\to\mathbb{R}$ 是一个光滑的函数。</p>
-<p>通常情况下，我们无法直接得到整个函数 $f$ 的全局视野。能得到的只有一系列点 $x_0,x_1,x_2,\ldots.$ 的函数值以及相应的导数值。幸运的是，优化算法能够在尽量减少计算开销以及内存的情况下，去寻找一个可以信赖的解。</p>
+    
+    <article class="post">
+        <header class="post-header">
+            <h1 class="post-title">无约束优化基础(一)</h1>
+            <div class="post-meta">
+                <time datetime="2025-07-27">2025年7月27日</time>
+                
+                <span class="category">数值优化</span>
+                
+            </div>
+            
+            <div class="post-tags">
+                
+                <span class="tag">学习笔记</span>
+                
+                <span class="tag">泰勒公式</span>
+                
+                <span class="tag">优化算法</span>
+                
+                <span class="tag">数学分析</span>
+                
+            </div>
+            
+        </header>
+
+        <div class="post-content" id="post-content">
+            <h1 id="无约束优化基础一">无约束优化基础(一)</h1>
+<blockquote>
+<p>🎯 <strong>导读</strong>: 本文将从数学角度深入探讨无约束优化的基本概念，包括全局最小值、局部最小值、以及泰勒定理在优化算法中的重要作用。</p></blockquote>
+<hr>
+<h2 id="基本概念">基本概念</h2>
+<p>在无约束优化中，我们最小化一个依赖于真实值变量的目标函数，并且对这些变量没有任何限制。因此，可以做出如下数学定义：</p>
+<div align="center">
+<p><strong>优化问题的数学表述</strong></p>
+<p>$$\min_{x} f(x) \tag{1}$$</p>
+</div>
+<p>其中：</p>
+<ul>
+<li>$x \in \mathbb{R}^n$ 是一个由 $n ≥ 1$ 个分量组成的实数向量</li>
+<li>$f:\mathbb{R}^n \to \mathbb{R}$ 是一个光滑的函数</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>现实约束</strong>: 通常情况下，我们无法直接得到整个函数 $f$ 的全局视野。能得到的只有一系列点 $x_0, x_1, x_2, \ldots$ 的函数值以及相应的导数值。</p></blockquote>
+<p>幸运的是，优化算法能够在尽量减少计算开销以及内存的情况下，去寻找一个可以信赖的解。</p>
+<hr>
 <h2 id="什么是解">什么是解？</h2>
-<p>如果我们能够找到函数$f$的全局最小值点，也就是使得函数取得最小值的地方，那是最完美的。一个正式的定义是</p>
+<h3 id="全局最小值-vs-局部最小值">全局最小值 vs 局部最小值</h3>
+<p>如果我们能够找到函数 $f$ 的全局最小值点，也就是使得函数取得最小值的地方，那是最完美的。</p>
+<div align="center">
+<p><strong>全局最小值的定义</strong></p>
 <p>$$\text{A point } x^* \text{ is a global minimizer if } f(x^*) \leq f(x) \text{ for all } x$$</p>
-<p>其中 $x$ 在整个 $\mathbb{R}^n$，或者至少在感兴趣的范围内。由于我们对 $f$ 的了解通常只是局部的，因此全局的最小值往往难以找到。并且由于我们的算法并不会访问很多点(这也是算法本身希望的)，我们通常对 $f$ 的整体形状没有好的认识，同时我们永远无法确定该函数在某个未被算法采样的区域内是否出现了急剧抖动。所以，大多数算法仅能够找到一个局部最小值，即在其邻域内达到 $f$ 最小值的点。从而有</p>
+</div>
+<blockquote>
+<p>🔍 <strong>理解要点</strong>: 其中 $x$ 在整个 $\mathbb{R}^n$，或者至少在感兴趣的范围内。</p></blockquote>
+<p>由于我们对 $f$ 的了解通常只是局部的，因此全局的最小值往往难以找到。并且由于我们的算法并不会访问很多点（这也是算法本身希望的），我们通常对 $f$ 的整体形状没有好的认识，同时我们永远无法确定该函数在某个未被算法采样的区域内是否出现了急剧抖动。</p>
+<p>所以，大多数算法仅能够找到一个局部最小值，即在其邻域内达到 $f$ 最小值的点。</p>
+<div align="center">
+<p><strong>局部最小值的定义</strong></p>
 <p>$$\text{A point } x^* \text{ is a local minimizer if there is a neighborhood } \mathcal{N} \text{ of } x^* \text{ such that } f(x^*) \leq f(x) \text{ for all } x \in \mathcal{N}$$</p>
-<p>满足上述定义的点通常情况下被称为弱局部极小值(weak local minimizer)。这与严格的最小局部极小值定义区分开，即</p>
+</div>
+<h3 id="弱局部极小值-vs-严格局部极小值">弱局部极小值 vs 严格局部极小值</h3>
+<p>满足上述定义的点通常情况下被称为<strong>弱局部极小值</strong>（weak local minimizer）。这与严格的最小局部极小值定义区分开：</p>
+<div align="center">
+<p><strong>严格局部极小值的定义</strong></p>
 <p>$$
 \begin{align}
 &amp;\text{A point } x^* \text{ is a strict local minimizer (also called a strong local minimizer) if there is a neighborhood } \mathcal{N} \text{ of } x^* \text{ such that } \\
-&amp;f(x^*) \leq f(x) \text{ for all } x \in \mathcal{N} \text{ with } x \leq {x^*}
+&amp;f(x^*) &lt; f(x) \text{ for all } x \in \mathcal{N} \text{ with } x \neq x^*
 \end{align}
 $$</p>
-<p>对于常数函数 $f(x) = 2$，每一个点 $x$ 都是一个若局部极小值， 然后对于函数$f(x) = (x-2)^4$ 来说，在 $x = 2$ 处有一个严格局部极小值。</p>
-<p>另一种局部最小值的定义有</p>
+</div>
+<h3 id="示例对比">示例对比</h3>
+<table>
+  <thead>
+      <tr>
+          <th>函数类型</th>
+          <th>示例</th>
+          <th>极小值性质</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>常数函数</td>
+          <td>$f(x) = 2$</td>
+          <td>每个点都是弱局部极小值</td>
+      </tr>
+      <tr>
+          <td>四次函数</td>
+          <td>$f(x) = (x-2)^4$</td>
+          <td>$x = 2$ 处有严格局部极小值</td>
+      </tr>
+  </tbody>
+</table>
+<p>对于常数函数 $f(x) = 2$，每一个点 $x$ 都是一个弱局部极小值，然后对于函数 $f(x) = (x-2)^4$ 来说，在 $x = 2$ 处有一个严格局部极小值。</p>
+<h3 id="孤立局部极小值">孤立局部极小值</h3>
+<p>另一种局部最小值的定义：</p>
+<div align="center">
+<p><strong>孤立局部极小值的定义</strong></p>
 <p>$$\text{A point } x^* \text{ is an isolated local minimizer if there is a neighborhood } \mathcal{N} \text{ of } x^* \text{ such that } x^* \text{ is the only local minimizer in } \mathcal{N}$$</p>
-<p>当然，<strong>一些严格的局部最小值并不是孤立的</strong>，正如以下的函数所示</p>
+</div>
+<h3 id="反例非孤立的严格局部极小值">反例：非孤立的严格局部极小值</h3>
+<blockquote>
+<p>⚠️ <strong>重要发现</strong>: 一些严格的局部最小值并不是孤立的</p></blockquote>
+<p>考虑以下函数：</p>
 <p>$$f(x)=\begin{cases}
 x^4\cos\left(\frac{1}{x}\right)+2x^4 &amp; x\neq0 \\
 0 &amp; x=0
 \end{cases}$$</p>
-<p>该函数是一个二阶连续可微的函数并且在 $x^*=0$ 有着严格的局部极小值的函数(此处不做证明)。然而，在 $x=0$ 的任意小邻域内，存在无穷多个其他严格的局部极小值点，这些点并不总是孤立，但却都是满足严格局部极小值定义的。(以下做进一步的说明为什么是这个结论)。对于该函数，它具有以下一些特性：</p>
+<p>该函数是一个二阶连续可微的函数并且在 $x^*=0$ 有着严格的局部极小值的函数（此处不做证明）。然而，在 $x=0$ 的任意小邻域内，存在无穷多个其他严格的局部极小值点，这些点并不总是孤立，但却都是满足严格局部极小值定义的。</p>
+<h4 id="函数特性分析">函数特性分析</h4>
+<p>该函数具有以下一些特性：</p>
 <ul>
-<li>高频震荡性：当 $x \to 0$ 时，$cos(\frac{1}{x})$ 以极高频率震荡，周期随着 $\left|x\right|$ 减小而缩短，并且其振幅受 $x^4$ 压制，其波峰/波谷趋近于0。</li>
-<li>邻域内存在无穷多个极小值点：例如当 ${\frac{1}{x}}=2k\pi(k\in\mathbb{Z})$，即 $x_k = \frac{1}{2k\pi}$，函数取得局部极小值，其中 $k$ 可以趋于 $\infty$​</li>
+<li><strong>高频震荡性</strong>: 当 $x \to 0$ 时，$\cos(\frac{1}{x})$ 以极高频率震荡，周期随着 $|x|$ 减小而缩短，并且其振幅受 $x^4$ 压制，其波峰/波谷趋近于0。</li>
+<li><strong>邻域内存在无穷多个极小值点</strong>: 例如当 $\frac{1}{x}=2k\pi(k\in\mathbb{Z})$，即 $x_k = \frac{1}{2k\pi}$，函数取得局部极小值，其中 $k$ 可以趋于 $\infty$</li>
 </ul>
-<h2 id="识别局部最小">识别局部最小</h2>
-<p>从上述的定义来看，找出一个点 $x$ 是否是局部极小值的唯一方法是检查其邻域内的所有点，以确保它们都没有一个更小的函数值。然而，当函数 $f$ 是光滑的时候，有更加高校且实用的方式去验证一个局部极小值。特别是当函数 $f$ 是一个连续二阶可微的时候，我们能够仅仅通过检查其梯度 $\nabla f(x^*)$ 和 Hessian矩阵 $\nabla^2 f(x^*)$ (也就是一阶导和二阶导)来判断 $x$ 是局部极小值。</p>
+<hr>
+<h2 id="识别局部最小值">识别局部最小值</h2>
+<p>从上述的定义来看，找出一个点 $x$ 是否是局部极小值的唯一方法是检查其邻域内的所有点，以确保它们都没有一个更小的函数值。</p>
+<blockquote>
+<p>🚀 <strong>优化策略</strong>: 然而，当函数 $f$ 是光滑的时候，有更加高效且实用的方式去验证一个局部极小值。</p></blockquote>
+<p>特别是当函数 $f$ 是一个连续二阶可微的时候，我们能够仅仅通过检查其梯度 $\nabla f(x^<em>)$ 和 Hessian矩阵 $\nabla^2 f(x^</em>)$ （也就是一阶导和二阶导）来判断 $x$ 是局部极小值。</p>
 <p>用于研究光滑函数最小值的数学工具是泰勒公式，因此以下给出一些定理及证明。</p>
+<hr>
+<h2 id="泰勒定理及其应用">泰勒定理及其应用</h2>
 <h3 id="定理1-泰勒定理">定理1 （泰勒定理）</h3>
-<p>假设 $f$ : $\mathbb{R^n} \to \mathbb{R}$ 是连续可微的，且 $p \in \mathbb{R^n}$. 此时对任意的 $t \in (0, 1)$有</p>
-<p>$$f(x+p)=f(x)+\nabla f(x+tp)^Tp,\quad(2)$$</p>
-<p>此外，如果 $f$ 是二次连续可微的，对任意的 $t \in (0, 1)$有</p>
-<p>$$\nabla f(x+p)=\nabla f(x)+\int_0^1\nabla^2f(x+tp)p dt, \quad(3)$$</p>
-<p>$$f(x+p)=f(x)+\nabla f(x)^Tp+\frac{1}{2}p^T\nabla^2f(x+tp)p,\quad(4)$$</p>
-<p>最优性的必要条件是通过假设 $x$ 是局部最小值，然后证明关于 $\nabla f(x^*)$ 和 $\nabla^2 f(x^*)$ 的事实推导的。</p>
+<p>假设 $f$ : $\mathbb{R}^n \to \mathbb{R}$ 是连续可微的，且 $p \in \mathbb{R}^n$. 此时对任意的 $t \in (0, 1)$ 有：</p>
+<div align="center">
+<p><strong>一阶泰勒展开</strong></p>
+<p>$$f(x+p)=f(x)+\nabla f(x+tp)^Tp \tag{2}$$</p>
+</div>
+<p>此外，如果 $f$ 是二次连续可微的，对任意的 $t \in (0, 1)$ 有：</p>
+<div align="center">
+<p><strong>梯度的一阶展开</strong></p>
+<p>$$\nabla f(x+p)=\nabla f(x)+\int_0^1\nabla^2f(x+tp)p , dt \tag{3}$$</p>
+<p><strong>二阶泰勒展开</strong></p>
+<p>$$f(x+p)=f(x)+\nabla f(x)^Tp+\frac{1}{2}p^T\nabla^2f(x+tp)p \tag{4}$$</p>
+</div>
+<blockquote>
+<p>🎯 <strong>应用意义</strong>: 最优性的必要条件是通过假设 $x$ 是局部最小值，然后证明关于 $\nabla f(x^<em>)$ 和 $\nabla^2 f(x^</em>)$ 的事实推导的。</p></blockquote>
+<hr>
 <h2 id="证明">证明</h2>
-<p>对于公式(2)，令 $g(t)=f(x+tp)$，则由拉格朗日中值定理有，$g(1)-g(0)=g&rsquo;(t)$，即 $f(x+p)-f(x)=\nabla{f(x+tp)^T}p$，得证。</p>
-<p>对于公式(3)，$g(t)=\nabla{f(x+tp)}$，由牛顿-莱布尼茨公式，有，$g(1)-g(0)=\int_0^1g&rsquo;(t)dt$，即 $\nabla{f(x+p)}-\nabla{f(x)}=\int_0^1{\nabla^2{f(x+pt)p}dt}$，得证。</p>
-<p>对于公式(4)，令 $g(t)=f(x+tp)$，因为二阶连续可微，则有 $g&rsquo;(t)=\nabla{f(x+tp)^Tp}$，$g&rsquo;&rsquo;(t)=p^T\nabla^2{f(x+tp)p}$，对 $g(t)$ 在 $t=0$ 处进行二阶泰勒展开，有 $g(1) = g(0) + g&rsquo;(0) + \frac12g&rsquo;&rsquo;(t)$，将上述结果代入该式中，有 $f(x+p)=f(x)+\nabla f(x)^Tp+\frac{1}{2}p^T\nabla^2f(x+tp)p$，得证。</p>
-<h2 id="定理二">定理二</h2>
-<p>TODO</p>
-<h2 id="定理三">定理三</h2>
-<p>TODO</p>
-<h2 id="定理四">定理四</h2>
-<p>TODO</p>
-<h2 id="定理五">定理五</h2>
-<p>TODO</p>
+<h3 id="公式2的证明">公式(2)的证明</h3>
+<p>令 $g(t)=f(x+tp)$，则由拉格朗日中值定理有：
+$$g(1)-g(0)=g&rsquo;(t)$$</p>
+<p>即：
+$$f(x+p)-f(x)=\nabla{f(x+tp)^T}p$$</p>
+<p><strong>得证</strong> ✅</p>
+<h3 id="公式3的证明">公式(3)的证明</h3>
+<p>令 $g(t)=\nabla{f(x+tp)}$，由牛顿-莱布尼茨公式，有：
+$$g(1)-g(0)=\int_0^1g&rsquo;(t),dt$$</p>
+<p>即：
+$$\nabla{f(x+p)}-\nabla{f(x)}=\int_0^1{\nabla^2{f(x+pt)p},dt}$$</p>
+<p><strong>得证</strong> ✅</p>
+<h3 id="公式4的证明">公式(4)的证明</h3>
+<p>令 $g(t)=f(x+tp)$，因为二阶连续可微，则有：</p>
+<ul>
+<li>$g&rsquo;(t)=\nabla{f(x+tp)^T}p$</li>
+<li>$g&rsquo;&rsquo;(t)=p^T\nabla^2{f(x+tp)p}$</li>
+</ul>
+<p>对 $g(t)$ 在 $t=0$ 处进行二阶泰勒展开，有：
+$$g(1) = g(0) + g&rsquo;(0) + \frac{1}{2}g&rsquo;&rsquo;(t)$$</p>
+<p>将上述结果代入该式中，有：
+$$f(x+p)=f(x)+\nabla f(x)^Tp+\frac{1}{2}p^T\nabla^2f(x+tp)p$$</p>
+<p><strong>得证</strong> ✅</p>
+<hr>
+<h2 id="待续">待续&hellip;</h2>
+<blockquote>
+<p>📚 <strong>后续内容</strong>: 定理二到定理五将在后续章节中详细讨论，包括最优性条件、收敛性分析等重要内容。</p></blockquote>
+<hr>
+<div align="center">
+<p><em>本文是数值优化系列的第一篇，后续将深入探讨更多优化算法和理论。</em></p>
+</div>
 
-    </div>
-
-    <footer class="post-footer">
-        <div class="post-navigation">
-            
-            <a href="/blog/posts/newton-method/" class="prev-post">
-                ← 牛顿法优化算法
-            </a>
-            
-            
         </div>
-    </footer>
-</article>
+
+        <footer class="post-footer">
+            <div class="post-navigation">
+                
+                <a href="/blog/posts/newton-method/" class="prev-post">
+                    ← 牛顿法优化算法
+                </a>
+                
+                
+            </div>
+        </footer>
+    </article>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    generateTOC();
+    handleTOCScroll();
+});
+
+function generateTOC() {
+    const content = document.getElementById('post-content');
+    const toc = document.getElementById('toc');
+    const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    
+    if (headings.length === 0) {
+        document.querySelector('.toc-sidebar').style.display = 'none';
+        document.querySelector('.post').style.marginLeft = '0';
+        return;
+    }
+    
+    let tocHTML = '<ul class="toc-list">';
+    let currentLevel = 0;
+    
+    headings.forEach((heading, index) => {
+        const level = parseInt(heading.tagName.charAt(1));
+        const text = heading.textContent;
+        const id = 'heading-' + index;
+        
+        
+        heading.id = id;
+        
+        
+        if (level > currentLevel) {
+            for (let i = currentLevel; i < level; i++) {
+                if (i > 0) tocHTML += '<ul class="toc-list">';
+            }
+        } else if (level < currentLevel) {
+            for (let i = currentLevel; i > level; i--) {
+                tocHTML += '</ul>';
+            }
+        }
+        
+        tocHTML += `<li class="toc-item toc-level-${level}">
+                      <a href="#${id}" class="toc-link" data-target="${id}">${text}</a>
+                    </li>`;
+        
+        currentLevel = level;
+    });
+    
+    
+    for (let i = 0; i < currentLevel; i++) {
+        tocHTML += '</ul>';
+    }
+    
+    toc.innerHTML = tocHTML;
+    
+    
+    document.querySelectorAll('.toc-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('data-target');
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+                
+                
+                document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+}
+
+function handleTOCScroll() {
+    const headings = document.querySelectorAll('#post-content h1, #post-content h2, #post-content h3, #post-content h4, #post-content h5, #post-content h6');
+    const tocLinks = document.querySelectorAll('.toc-link');
+    
+    if (headings.length === 0) return;
+    
+    window.addEventListener('scroll', function() {
+        let currentHeading = '';
+        
+        headings.forEach(heading => {
+            const rect = heading.getBoundingClientRect();
+            if (rect.top <= 100) {
+                currentHeading = heading.id;
+            }
+        });
+        
+        tocLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-target') === currentHeading) {
+                link.classList.add('active');
+            }
+        });
+    });
+}
+</script>
 
         </div>
     </main>

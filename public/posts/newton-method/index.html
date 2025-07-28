@@ -59,32 +59,44 @@
     <main class="site-main">
         <div class="container">
             
-<article class="post">
-    <header class="post-header">
-        <h1 class="post-title">牛顿法优化算法</h1>
-        <div class="post-meta">
-            <time datetime="2024-01-16">2024年1月16日</time>
-            
-            <span class="category">数值优化</span>
-            
+<div class="post-layout">
+    
+    <aside class="toc-sidebar">
+        <div class="toc-container">
+            <h3 class="toc-title">📋 目录</h3>
+            <div class="toc-content" id="toc">
+                
+            </div>
         </div>
-        
-        <div class="post-tags">
-            
-            <span class="tag">牛顿法</span>
-            
-            <span class="tag">二阶优化</span>
-            
-            <span class="tag">拟牛顿法</span>
-            
-            <span class="tag">Hessian矩阵</span>
-            
-        </div>
-        
-    </header>
+    </aside>
 
-    <div class="post-content">
-        <h1 id="牛顿法优化算法">牛顿法优化算法</h1>
+    
+    <article class="post">
+        <header class="post-header">
+            <h1 class="post-title">牛顿法优化算法</h1>
+            <div class="post-meta">
+                <time datetime="2024-01-16">2024年1月16日</time>
+                
+                <span class="category">数值优化</span>
+                
+            </div>
+            
+            <div class="post-tags">
+                
+                <span class="tag">牛顿法</span>
+                
+                <span class="tag">二阶优化</span>
+                
+                <span class="tag">拟牛顿法</span>
+                
+                <span class="tag">Hessian矩阵</span>
+                
+            </div>
+            
+        </header>
+
+        <div class="post-content" id="post-content">
+            <h1 id="牛顿法优化算法">牛顿法优化算法</h1>
 <p>牛顿法是一种基于二阶信息的优化算法，相比梯度下降具有更快的收敛速度。</p>
 <h2 id="算法原理">算法原理</h2>
 <p>牛顿法利用函数的二阶导数信息来构造更好的搜索方向。对于目标函数 $f(x)$，牛顿法的更新公式为：</p>
@@ -171,23 +183,121 @@
 <h2 id="总结">总结</h2>
 <p>牛顿法在函数性质良好时具有优秀的收敛性能，但在实际应用中需要考虑计算成本和数值稳定性问题。</p>
 
-    </div>
-
-    <footer class="post-footer">
-        <div class="post-navigation">
-            
-            <a href="/blog/posts/gradient-descent/" class="prev-post">
-                ← 梯度下降算法详解
-            </a>
-            
-            
-            <a href="/blog/posts/%E6%97%A0%E7%BA%A6%E6%9D%9F%E4%BC%98%E5%8C%96%E5%9F%BA%E7%A1%80%E4%B8%80/" class="next-post">
-                无约束优化基础(一) →
-            </a>
-            
         </div>
-    </footer>
-</article>
+
+        <footer class="post-footer">
+            <div class="post-navigation">
+                
+                <a href="/blog/posts/gradient-descent/" class="prev-post">
+                    ← 梯度下降算法详解
+                </a>
+                
+                
+                <a href="/blog/posts/%E6%97%A0%E7%BA%A6%E6%9D%9F%E4%BC%98%E5%8C%96%E5%9F%BA%E7%A1%80%E4%B8%80/" class="next-post">
+                    无约束优化基础(一) →
+                </a>
+                
+            </div>
+        </footer>
+    </article>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    generateTOC();
+    handleTOCScroll();
+});
+
+function generateTOC() {
+    const content = document.getElementById('post-content');
+    const toc = document.getElementById('toc');
+    const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    
+    if (headings.length === 0) {
+        document.querySelector('.toc-sidebar').style.display = 'none';
+        document.querySelector('.post').style.marginLeft = '0';
+        return;
+    }
+    
+    let tocHTML = '<ul class="toc-list">';
+    let currentLevel = 0;
+    
+    headings.forEach((heading, index) => {
+        const level = parseInt(heading.tagName.charAt(1));
+        const text = heading.textContent;
+        const id = 'heading-' + index;
+        
+        
+        heading.id = id;
+        
+        
+        if (level > currentLevel) {
+            for (let i = currentLevel; i < level; i++) {
+                if (i > 0) tocHTML += '<ul class="toc-list">';
+            }
+        } else if (level < currentLevel) {
+            for (let i = currentLevel; i > level; i--) {
+                tocHTML += '</ul>';
+            }
+        }
+        
+        tocHTML += `<li class="toc-item toc-level-${level}">
+                      <a href="#${id}" class="toc-link" data-target="${id}">${text}</a>
+                    </li>`;
+        
+        currentLevel = level;
+    });
+    
+    
+    for (let i = 0; i < currentLevel; i++) {
+        tocHTML += '</ul>';
+    }
+    
+    toc.innerHTML = tocHTML;
+    
+    
+    document.querySelectorAll('.toc-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('data-target');
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+                
+                
+                document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+}
+
+function handleTOCScroll() {
+    const headings = document.querySelectorAll('#post-content h1, #post-content h2, #post-content h3, #post-content h4, #post-content h5, #post-content h6');
+    const tocLinks = document.querySelectorAll('.toc-link');
+    
+    if (headings.length === 0) return;
+    
+    window.addEventListener('scroll', function() {
+        let currentHeading = '';
+        
+        headings.forEach(heading => {
+            const rect = heading.getBoundingClientRect();
+            if (rect.top <= 100) {
+                currentHeading = heading.id;
+            }
+        });
+        
+        tocLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-target') === currentHeading) {
+                link.classList.add('active');
+            }
+        });
+    });
+}
+</script>
 
         </div>
     </main>

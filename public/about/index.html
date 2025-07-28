@@ -59,18 +59,30 @@
     <main class="site-main">
         <div class="container">
             
-<article class="post">
-    <header class="post-header">
-        <h1 class="post-title">关于</h1>
-        <div class="post-meta">
-            <time datetime="2024-01-15">2024年1月15日</time>
-            
+<div class="post-layout">
+    
+    <aside class="toc-sidebar">
+        <div class="toc-container">
+            <h3 class="toc-title">📋 目录</h3>
+            <div class="toc-content" id="toc">
+                
+            </div>
         </div>
-        
-    </header>
+    </aside>
 
-    <div class="post-content">
-        <h1 id="关于这个博客">关于这个博客</h1>
+    
+    <article class="post">
+        <header class="post-header">
+            <h1 class="post-title">关于</h1>
+            <div class="post-meta">
+                <time datetime="2024-01-15">2024年1月15日</time>
+                
+            </div>
+            
+        </header>
+
+        <div class="post-content" id="post-content">
+            <h1 id="关于这个博客">关于这个博客</h1>
 <p>欢迎来到Claire的技术学习笔记！</p>
 <h2 id="博客介绍">博客介绍</h2>
 <p>这是一个记录技术学习历程的个人博客。我会在这里分享：</p>
@@ -153,15 +165,113 @@
 </ul>
 <p>感谢您的访问，希望这些内容对您的学习有所帮助！让我们一起在技术的道路上不断前进！🚀</p>
 
-    </div>
-
-    <footer class="post-footer">
-        <div class="post-navigation">
-            
-            
         </div>
-    </footer>
-</article>
+
+        <footer class="post-footer">
+            <div class="post-navigation">
+                
+                
+            </div>
+        </footer>
+    </article>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    generateTOC();
+    handleTOCScroll();
+});
+
+function generateTOC() {
+    const content = document.getElementById('post-content');
+    const toc = document.getElementById('toc');
+    const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    
+    if (headings.length === 0) {
+        document.querySelector('.toc-sidebar').style.display = 'none';
+        document.querySelector('.post').style.marginLeft = '0';
+        return;
+    }
+    
+    let tocHTML = '<ul class="toc-list">';
+    let currentLevel = 0;
+    
+    headings.forEach((heading, index) => {
+        const level = parseInt(heading.tagName.charAt(1));
+        const text = heading.textContent;
+        const id = 'heading-' + index;
+        
+        
+        heading.id = id;
+        
+        
+        if (level > currentLevel) {
+            for (let i = currentLevel; i < level; i++) {
+                if (i > 0) tocHTML += '<ul class="toc-list">';
+            }
+        } else if (level < currentLevel) {
+            for (let i = currentLevel; i > level; i--) {
+                tocHTML += '</ul>';
+            }
+        }
+        
+        tocHTML += `<li class="toc-item toc-level-${level}">
+                      <a href="#${id}" class="toc-link" data-target="${id}">${text}</a>
+                    </li>`;
+        
+        currentLevel = level;
+    });
+    
+    
+    for (let i = 0; i < currentLevel; i++) {
+        tocHTML += '</ul>';
+    }
+    
+    toc.innerHTML = tocHTML;
+    
+    
+    document.querySelectorAll('.toc-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('data-target');
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+                
+                
+                document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+}
+
+function handleTOCScroll() {
+    const headings = document.querySelectorAll('#post-content h1, #post-content h2, #post-content h3, #post-content h4, #post-content h5, #post-content h6');
+    const tocLinks = document.querySelectorAll('.toc-link');
+    
+    if (headings.length === 0) return;
+    
+    window.addEventListener('scroll', function() {
+        let currentHeading = '';
+        
+        headings.forEach(heading => {
+            const rect = heading.getBoundingClientRect();
+            if (rect.top <= 100) {
+                currentHeading = heading.id;
+            }
+        });
+        
+        tocLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-target') === currentHeading) {
+                link.classList.add('active');
+            }
+        });
+    });
+}
+</script>
 
         </div>
     </main>

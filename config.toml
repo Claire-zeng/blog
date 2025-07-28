@@ -48,6 +48,9 @@ theme = "modern-tech-theme"
     noHl = false
     hlLines = ""
     hlInverse = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
 
 # GitHub Pages 配置
 [build]

@@ -82,22 +82,43 @@
                 <a href="/blog/posts/%E6%97%A0%E7%BA%A6%E6%9D%9F%E4%BC%98%E5%8C%96%E5%9F%BA%E7%A1%80%E4%B8%80/">无约束优化基础(一)</a>
             </h2>
             <p class="post-excerpt"><h1 id="无约束优化基础一">无约束优化基础(一)</h1>
-<p>在无约束优化中，我们最小化一个依赖于真实值变量的目标函数，并且对这些变量没有任何限制。因此，可以做出如下数学定义</p>
-<p>$$
-\min_{x}f(x),\quad(1)
-$$</p>
-<p>其中 $x \in \mathbb{R}^n$ 是一个由 $n ≥ 1$个分量组成的实数向量，并且 $f:\mathbb{R}^n\to\mathbb{R}$ 是一个光滑的函数。</p>
-<p>通常情况下，我们无法直接得到整个函数 $f$ 的全局视野。能得到的只有一系列点 $x_0,x_1,x_2,\ldots.$ 的函数值以及相应的导数值。幸运的是，优化算法能够在尽量减少计算开销以及内存的情况下，去寻找一个可以信赖的解。</p>
+<blockquote>
+<p>🎯 <strong>导读</strong>: 本文将从数学角度深入探讨无约束优化的基本概念，包括全局最小值、局部最小值、以及泰勒定理在优化算法中的重要作用。</p></blockquote>
+<hr>
+<h2 id="基本概念">基本概念</h2>
+<p>在无约束优化中，我们最小化一个依赖于真实值变量的目标函数，并且对这些变量没有任何限制。因此，可以做出如下数学定义：</p>
+<div align="center">
+<p><strong>优化问题的数学表述</strong></p>
+<p>$$\min_{x} f(x) \tag{1}$$</p>
+</div>
+<p>其中：</p>
+<ul>
+<li>$x \in \mathbb{R}^n$ 是一个由 $n ≥ 1$ 个分量组成的实数向量</li>
+<li>$f:\mathbb{R}^n \to \mathbb{R}$ 是一个光滑的函数</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>现实约束</strong>: 通常情况下，我们无法直接得到整个函数 $f$ 的全局视野。能得到的只有一系列点 $x_0, x_1, x_2, \ldots$ 的函数值以及相应的导数值。</p></blockquote>
+<p>幸运的是，优化算法能够在尽量减少计算开销以及内存的情况下，去寻找一个可以信赖的解。</p>
+<hr>
 <h2 id="什么是解">什么是解？</h2>
-<p>如果我们能够找到函数$f$的全局最小值点，也就是使得函数取得最小值的地方，那是最完美的。一个正式的定义是</p>
+<h3 id="全局最小值-vs-局部最小值">全局最小值 vs 局部最小值</h3>
+<p>如果我们能够找到函数 $f$ 的全局最小值点，也就是使得函数取得最小值的地方，那是最完美的。</p>
+<div align="center">
+<p><strong>全局最小值的定义</strong></p>
 <p>$$\text{A point } x^* \text{ is a global minimizer if } f(x^*) \leq f(x) \text{ for all } x$$</p>
-<p>其中 $x$ 在整个 $\mathbb{R}^n$，或者至少在感兴趣的范围内。由于我们对 $f$ 的了解通常只是局部的，因此全局的最小值往往难以找到。并且由于我们的算法并不会访问很多点(这也是算法本身希望的)，我们通常对 $f$ 的整体形状没有好的认识，同时我们永远无法确定该函数在某个未被算法采样的区域内是否出现了急剧抖动。所以，大多数算法仅能够找到一个局部最小值，即在其邻域内达到 $f$ 最小值的点。从而有</p>
-<p>$$\text{A point } x^* \text{ is a local minimizer if there is a neighborhood } \mathcal{N} \text{ of } x^* \text{ such that } f(x^*) \leq f(x) \text{ for all } x \in \mathcal{N}$$</p></p>
+</div>
+<blockquote>
+<p>🔍 <strong>理解要点</strong>: 其中 $x$ 在整个 $\mathbb{R}^n$，或者至少在感兴趣的范围内。</p></blockquote>
+<p>由于我们对 $f$ 的了解通常只是局部的，因此全局的最小值往往难以找到。并且由于我们的算法并不会访问很多点（这也是算法本身希望的），我们通常对 $f$ 的整体形状没有好的认识，同时我们永远无法确定该函数在某个未被算法采样的区域内是否出现了急剧抖动。</p></p>
             <div class="post-tags">
                 
                 <span class="tag">学习笔记</span>
                 
                 <span class="tag">泰勒公式</span>
+                
+                <span class="tag">优化算法</span>
+                
+                <span class="tag">数学分析</span>
                 
             </div>
         </article>
