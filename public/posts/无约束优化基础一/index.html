@@ -212,7 +212,7 @@ x^4\cos\left(\frac{1}{x}\right)+2x^4 &amp; x\neq0 \\
 <p>特别是当函数 $f$ 是一个连续二阶可微的时候，我们能够仅仅通过检查其梯度 $\nabla f(x^*)$ 和 Hessian矩阵 $\nabla^2 f(x^*)$ （也就是一阶导和二阶导）来判断 $x$ 是局部极小值。</p>
 <p>用于研究光滑函数最小值的数学工具是泰勒公式，因此以下给出一些定理及证明。</p>
 <hr>
-<h2 id="泰勒定理及其应用">泰勒定理及其应用</h2>
+<h2 id="定理及其证明">定理及其证明</h2>
 <h3 id="定理1-泰勒定理">定理1 （泰勒定理）</h3>
 <p>假设 $f$ : $\mathbb{R}^n \to \mathbb{R}$ 是连续可微的，且 $p \in \mathbb{R}^n$. 此时对任意的 $t \in (0, 1)$ 有：</p>
 <div align="center">
@@ -229,20 +229,20 @@ x^4\cos\left(\frac{1}{x}\right)+2x^4 &amp; x\neq0 \\
 <blockquote>
 <p>🎯 <strong>应用意义</strong>: 最优性的必要条件是通过假设 $x$ 是局部最小值，然后证明关于 $\nabla f(x^*)$ 和 $\nabla^2 f(x^*)$ 的事实推导的。</p></blockquote>
 <hr>
-<h2 id="证明">证明</h2>
-<h3 id="公式2的证明">公式(2)的证明</h3>
+<h3 id="证明">证明</h3>
+<h4 id="公式2的证明">公式(2)的证明</h4>
 <p>令 $g(t)=f(x+tp)$，则由拉格朗日中值定理有：
 $$g(1)-g(0)=g&rsquo;(t)$$</p>
 <p>即：
 $$f(x+p)-f(x)=\nabla{f(x+tp)^T}p$$</p>
 <p><strong>得证</strong> ✅</p>
-<h3 id="公式3的证明">公式(3)的证明</h3>
+<h4 id="公式3的证明">公式(3)的证明</h4>
 <p>令 $g(t)=\nabla{f(x+tp)}$，由牛顿-莱布尼茨公式，有：
 $$g(1)-g(0)=\int_0^1g&rsquo;(t),dt$$</p>
 <p>即：
 $$\nabla{f(x+p)}-\nabla{f(x)}=\int_0^1{\nabla^2{f(x+pt)p},dt}$$</p>
 <p><strong>得证</strong> ✅</p>
-<h3 id="公式4的证明">公式(4)的证明</h3>
+<h4 id="公式4的证明">公式(4)的证明</h4>
 <p>令 $g(t)=f(x+tp)$，因为二阶连续可微，则有：</p>
 <ul>
 <li>$g&rsquo;(t)=\nabla{f(x+tp)^T}p$</li>
@@ -254,6 +254,17 @@ $$g(1) = g(0) + g&rsquo;(0) + \frac{1}{2}g&rsquo;&rsquo;(t)$$</p>
 $$f(x+p)=f(x)+\nabla f(x)^Tp+\frac{1}{2}p^T\nabla^2f(x+tp)p$$</p>
 <p><strong>得证</strong> ✅</p>
 <hr>
+<h3 id="定理2-一阶必要条件">定理2 （一阶必要条件）</h3>
+<p>如果 $x^*$ 是局部最小值点，并且函数 $f$ 在 $x^*$ 的开区间邻域内是连续可微的，那么 $\nabla{f(x^*)}=0$</p>
+<h3 id="证明-1">证明</h3>
+<p>使用反证法证明，假设 $\nabla{f(x^*)} \neq 0$，定义矢量 $p=-\nabla{f(x^*)}$，注意到 $p^{T}\nabla f(x^{*})=-||\nabla f(x^{*})||^{2}&lt;0$，因为 $\nabla{f(x^*)}$ 在 $x^*$ 邻域内是连续的，因此必定存在一个常熟 $C &gt; 0$，使得</p>
+<p>$$
+p^T\nabla f(x^*+tp)&lt;0,\quad\text{for all } t\in[0,C].
+$$</p>
+<p>对任意的 $\hat{t} \in (0, T]$，我们通过泰勒公式(书上写的是泰勒，说是 $(0, \hat{t}]$ 上使用拉格朗日中值定理可能更直观)，有</p>
+<p>$$
+f(x^*+ \hat{t}p) = f(x^*) + \hat{t}p^T\nabla{f(x^* + tp)}, \quad\text{for some } t \in (0, \hat{t}).
+$$</p>
 <h2 id="待续">待续&hellip;</h2>
 <blockquote>
 <p>📚 <strong>后续内容</strong>: 定理二到定理五将在后续章节中详细讨论，包括最优性条件、收敛性分析等重要内容。</p></blockquote>
